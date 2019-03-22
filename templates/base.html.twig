@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{  asset('css/styles.css') }}">
+        {% block stylesheets%}
+
+        {% endblock %}
+    </head>
+    <body>
+    {% block nav %}
+        <nav>
+            {% if is_granted('ROLE_ADMIN') %}
+                <p class="crud_title">Crud Panels</p>
+                <div class="admin_wrapper">
+                    <p><a href="{{ path('user_index') }}">Users</a></p>
+                    <p class="logboek_crud"><a href="{{ path('logboek_index') }}">Logboek</a></p>
+                    <p class="trucks_crud"><a href="{{ path('truck_index') }}">Trucks</a></p>
+                </div>
+            {% endif %}
+            <ul>
+                <li><a href="/">Home</a></li>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}<li><a href="{{ path('fos_user_security_logout') }}">logout</a></li>{% endif %}
+                {% if app.user %}
+                {% else %}
+                <li><a href="{{ path('fos_user_security_login') }}">Login</a></li>
+                <li><a href="{{ path('fos_user_registration_register') }}">Register</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endblock %}
+        {% block body %}{% endblock %}
+    {% block fos_user_content %}
+    {% endblock fos_user_content %}
+        {% block javascripts %}{% endblock %}
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </body>
+</html>
